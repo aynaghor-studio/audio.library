@@ -1,0 +1,2457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weding Audio library , Aynaghor Studio">
+    <meta name="keywords" content="Audio library, Wedding audio library, best audio library, Aynaghor Studio Audio library, Studio Audio library">
+    <title>আয়না ঘর Studio - Wedding Song Library</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <script src="verify.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ6Q6R8L5DWgVuXb7DEz19JXDBk2FJh9+/Cw2IN06wHgh27jAOyTq3f33bm6" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.logo-container {
+    position: absolute;
+    bottom: 55%; /* Move logo a little higher */
+    animation: moveLogo 1s ease-out forwards;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: fadeInLogo 0.1s ease-out;
+}
+
+.logo-container h2{
+    text-align: center;
+    display: flex;
+    color: red;
+    justify-content: center;
+}
+
+.loader-circle-background {
+    position: absolute;
+    bottom: 10%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid red;
+    border-top: 8px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.1s linear infinite, progress 5s linear forwards;
+    opacity: 50;
+}
+
+/* Progress Bar Animation */
+@keyframes progress {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(990deg);
+    }
+}
+
+@keyframes moveLogo {
+    0% {
+        transform: translateY(200px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLogo {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(45deg, #ff5722, #0066cc);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-family: 'Helvetica', sans-serif;
+        }
+
+        header h3 {
+            font-size: 1.8rem;
+            margin-top: 15px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        header p a{
+            border: white 1px solid;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        header p a:hover{
+            transform: none;
+            color: greenyellow;
+            border: 1px solid greenyellow;
+            border-radius: 25px;
+        }
+
+        /* Song Card Styles */
+        .song-card {
+            margin: 15px 0;
+            transition: transform 0.3s ease;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .song-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            background-color: #cccccc;
+        }
+
+        .song-card .card-body {
+            padding: 20px;
+            background-color: #fafafa;
+        }
+
+        .song-card .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff5722;
+        }
+
+        .song-card .card-text {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Audio Player Styles */
+        .audio-player {
+            margin-top: 10px;
+            padding-right: 5px;
+        }
+
+        /* Genre Section Styling */
+        .song-section {
+            margin-bottom: 40px;
+            background-color: #e9e9e9;
+            padding: 40px 0;
+            border-radius: 8px;
+        }
+
+        .genre-header {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        /* Filter Button Styles */
+        .filter-btn {
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            margin: 5px;
+            background-color: #ff5722;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #0066cc;
+        }
+
+        /* Responsive Styling for Song Cards */
+        .song-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .song-card {
+            width: 22%;
+            margin: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .song-card {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .song-card {
+                width: 100%;
+            }
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        /* Scroll to Top Button Styles */
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    width: 60px;
+    height: 60px;
+    display: none;  /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-to-top-btn:hover {
+    background-color: #004494;
+}
+
+.scroll-to-top-btn:focus {
+    outline: none;
+}
+
+/* On hover, add a little zoom effect */
+.scroll-to-top-btn:hover {
+    transform: scale(1.1);
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="loader" class="loader-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h2>আয়না ঘর Studio</h2>
+        </div>
+        <div class="loader-circle"></div>
+    </div>
+
+    <button id="scrollToTopBtn" class="scroll-to-top-btn">&#8593;</button>
+
+    <!-- Header -->
+    <header>
+        <h1>আয়না ঘর Studio</h1>
+        <p>Your Dream Wedding, Captured Beautifully</p>
+        <h3>Wedding Song & Music Library</h3>
+
+        <p><a href="main.html">Go back</a></p>
+    </header>
+
+    <!-- Container for Song Cards -->
+    <div class="container mt-5">
+        <!-- Filter Buttons -->
+        <div class="text-center mb-5">
+            <button class="btn filter-btn" onclick="filterContent('all')">All</button>
+            <button class="btn filter-btn" onclick="filterContent('aiburobhat')">Aiburobhat</button>
+            <button class="btn filter-btn" onclick="filterContent('ashirbad')">Ashirbad</button>
+            <button class="btn filter-btn" onclick="filterContent('basi_biye')">Basi Biye</button>
+            <button class="btn filter-btn" onclick="filterContent('bhat-kapor')">Bhat Kapor</button>
+            <button class="btn filter-btn" onclick="filterContent('bidaai')">Bidaai</button>
+            <button class="btn filter-btn" onclick="filterContent('bride-entry')">Bride Entry</button>
+            <button class="btn filter-btn" onclick="filterContent('gaye-holud')">Gaye Holud</button>
+            <button class="btn filter-btn" onclick="filterContent('groom-entry')">Groom Entry</button>
+            <button class="btn filter-btn" onclick="filterContent('jalsaj')">Jalsaj</button>
+            <button class="btn filter-btn" onclick="filterContent('mala-bodol')">Mala Bodol</button>
+            <button class="btn filter-btn" onclick="filterContent('mehndi')">Mehndi</button>
+            <button class="btn filter-btn" onclick="filterContent('nandimukh')">Nandimukh</button>
+            <button class="btn filter-btn" onclick="filterContent('sat-pake')">Sat Pake</button>
+            <button class="btn filter-btn" onclick="filterContent('sidur-daan')">Sat Pake</button>
+            <button class="btn filter-btn" onclick="filterContent('somplok-daan')">Somplok Daan</button>
+            <button class="btn filter-btn" onclick="filterContent('highlight')">Highlight</button>
+            <!-- Add other categories similarly -->
+          </div>
+          
+
+        <!-- Song Sections -->
+        <div id="aiburobhat" class="song-section filter-item aiburobhat">
+            <div class="genre-header">Aiburobhat</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Aiburobhat/Dekhechhi-Rupshagore.jpg" class="card-img-top" alt="Dekhechhi Rupshagore Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Dekhechhi Rupshagore</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Aiburo bhat/Dekhechi_Rupsagore.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Aiburobhat/Gilehriyaan.jpg" class="card-img-top" alt="Gilehriyaan Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Gilehriyaan</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Aiburo bhat/Gilehriyaan - Lyrical Video  Dangal  Aamir Khan  Pritam  Amitabh Bhattacharya - Zee Music Company.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Aiburobhat/OLIRO KOTHA SHUNE.jpg" class="card-img-top" alt="OLIRO KOTHA SHUNE Song">
+                        <div class="card-body">
+                            <h5 class="card-title">OLIRO KOTHA SHUNE</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Aiburo bhat/OLIRO KOTHA SHUNE_Debolinaa Nandy.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Aiburobhat/Piya-Tose-Naina-Laage-Re.jpg" class="card-img-top" alt="Piya tose naina laage Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Piya tose naina laage</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Aiburo bhat/Piya Tose Naina Laage Re.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Aiburobhat songs here -->
+            </div>
+        </div>
+        <div id="ashirbad" class="song-section filter-item ashirbad">
+            <div class="genre-header">Ashirbad</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Bhage re man.jpg" class="card-img-top" alt="Bhage re man">
+                        <div class="card-body">
+                            <h5 class="card-title">Bhage re man</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Ashirbad/Bhage Re Man Lyrical Video  Chameli  Sunidhi Chauhan  Irshad Kamil  Kareena Kapoor Rahul Bose.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Chura-Liya.jpg" class="card-img-top" alt="Chura liya">
+                        <div class="card-body">
+                            <h5 class="card-title">Chura liya</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Chura Liya Video  Sachet  Parampara  Himansh K Anushka S  Irshad K  Ashish P  Bhushan Kumar.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/jani okaron.jpg" class="card-img-top" alt="Jani Okaron">
+                        <div class="card-body">
+                            <h5 class="card-title">Jani Okaron</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Jani Okaron Official Video Fatafati I Ritabhari I Abir C  Ishan Antara New Bengali Song 2023.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Laal-Ishq.jpg" class="card-img-top" alt="Laal Ishq">
+                        <div class="card-body">
+                            <h5 class="card-title">Laal Ishq</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Laal Ishq (Video Song)  Goliyon Ki Raasleela Ram-leela  Ranveer Singh  Deepika Padukone - Eros Now Music (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/megher palok.jpg" class="card-img-top" alt="Megher Palok">
+                        <div class="card-body">
+                            <h5 class="card-title">Megher Palok</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Megher Palok  Shreya Ghoshal  Natobar Not Out  Lyrical.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Obosesha.jpg" class="card-img-top" alt="Obosesha">
+                        <div class="card-body">
+                            <h5 class="card-title">Obosesha</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Oboseshe_Arijit Singh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Raanjhana.jpg" class="card-img-top" alt="Raanjhana">
+                        <div class="card-body">
+                            <h5 class="card-title">Raanjhana</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Raanjhana  Priyank Sharmaaa  Hina Khan  Asad Khan ft Arijit Singh Raqueeb  Zee Music Originals.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Sapna-Jahan.jpg" class="card-img-top" alt="Sapna Jahan">
+                        <div class="card-body">
+                            <h5 class="card-title">Sapna Jahan</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/Sapna Jahan Full Video  BrothersAkshay Kumar JacquelineSonu Nigam Neeti Mohan.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Ashirbad/Urecha mon.jpg" class="card-img-top" alt="Urecha mon">
+                        <div class="card-body">
+                            <h5 class="card-title">Urecha Mon</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Ashirbad/URECHE MON VIDEO SONG  JEET  SHUBHASHREE  ARIJIT SINGH  BENGALI FILM 2017 - Jaaz Multimedia (youtube).mp3"s type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Ashirbad songs here -->
+            </div>
+        </div>
+        <div id="basi_biye" class="song-section filter-item basi_biye">
+            <div class="genre-header">Basi Biye</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Basi biye/bhalo-lage-tomake-tomake.jpg" class="card-img-top" alt="Bhalolaage Tomake Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bhalo laage tomake</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Basi biye/Bhalolaage Tomake  Lyrical Video  Tomake Chai  Bonny  Koushani  Arijit Singh  Anwesshaa.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Basi biye/Ghare-And-Baire-.jpg" class="card-img-top" alt="Hridoyer Rong Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Hridoyer Rong</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Basi biye/Hridoyer Rong  Ghare And Baire  Jisshu  Koel  Anupam Roy  Lagnajita  Mainak Bhaumik - Surinder  Films.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Basi biye songs here -->
+            </div>
+        </div>
+        <div id="bhat-kapor" class="song-section filter-item bhat-kapor">
+            <div class="genre-header">Bhat Kapor</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bhat kapor/Boron-Title-Song.jpg" class="card-img-top" alt="Boron title Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Boron title song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Bhat kapor/Boron Serial Title Song  Star Jalsha  Subhakush Music - Subhakush Music (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bhat kapor/Nijhum rater pori.jpg" class="card-img-top" alt="Nijhum rater pori Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Nijhum rater pori</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bhat kapor/Nijhum Rater Pori - Akash Mahmud (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bhat kapor/Subha mangalam.jpg" class="card-img-top" alt="Subha Mangalam Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Subha mangalam</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bhat kapor/Subha Mangalam  Mon Mane Na  Dev  Koel Mallick  Zubeen Garg  Jeet Gannguli  Sujit Guha.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bhat kapor/Subho Subho.jpg" class="card-img-top" alt="Subho Subho Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Subho Subho</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bhat kapor/Shubho Shubho  Mrs Chatterjee Vs Norway  Rani Mukerji  Altamash Faridi Amit Trivedi Kausar M.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bhat kapor/Tujh me rab diktha ha.jpg" class="card-img-top" alt="Tujh me rab diktha ha Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tujh me rab diktha ha</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bhat kapor/Tujh Me Rab Reprise.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Bhat Kapor songs here -->
+            </div>
+        </div>
+        <div id="bidaai" class="song-section filter-item bidaai">
+            <div class="genre-header">Bidaai</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Music symbol.jpg" class="card-img-top" alt="Babul Ka Ghar Chod Ke Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Babul Ka Ghar Chod Ke</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Babul Ka Ghar Chod Ke Beti Piya Ke  Sainik  Kumar Sanu Alka Yagnik  Bidai Songs  90s Hits.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/bidhi re song.jpg" class="card-img-top" alt="Bidhi re song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bidhi re</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Bidaai/Bidhi Re Bidhi Re  Abir Biswas  বদযর সর গন  Raghab C  Jeet G New Bengali Cover Song 2022.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Dhagon se bandha.jpg" class="card-img-top" alt="Dhaagon se Baandhaa song">
+                        <div class="card-body">
+                            <h5 class="card-title">Dhaagon se Baandhaa</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Dhaagon Se Baandhaa  Lyrical  Raksha Bandhan  Akshay Kumar Arijit SinghShreya GHimesh RIrshad.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Dilbaro song.jpg" class="card-img-top" alt="Dilbaro Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Dilbaro</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Dilbaro  Lyrical  Raazi  Alia Bhatt  Vicky Kaushal  Harshdeep Kaur Vibha S Shankar Mahadevan.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Din saghna da.jpg" class="card-img-top" alt="Din Shagna Da song">
+                        <div class="card-body">
+                            <h5 class="card-title">Din saghna da</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Din Shagna Da Lyrical Video   Phillauri  Anushka Sharma Diljit Dosanjh  Jasleen Royal.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Jhalmaley Laalcheli.jpg" class="card-img-top" alt="Jhalmaley laalcheli song">
+                        <div class="card-body">
+                            <h5 class="card-title">Jhalmaley Laalcheli</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Jhalmaley Laalcheliঝলমল ললচল  Snehasish Chakraborty SongBiyer Sad SongSomchanda  Nayanika.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Kabira song.jpg" class="card-img-top" alt="Kabira Encore song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kabira Encore</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Kabira_Encore_Song_Yeh_Jawaani_Hai_Deewani___Ranbir_Kapoor%2C_Deepika_Padukone(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/Kanyadaan song.jpg" class="card-img-top" alt="Kanyadaan Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kanyadaan Song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Kanyadaan Song  Tu meri baahon ke jhoole me pali laado  Musical Pheras  Wedding Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bidaai/tapur tupur song.jpg" class="card-img-top" alt="Tapur tupur song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tapur tupur</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bidaai/Tapur Tupur _ Rosogolla _ Pavel _ Nandita _ Shiboprosad _ Arnab Dutta _ Latest Bengali Film Song - Times Music Bangla (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Bidaai songs here -->
+            </div>
+        </div>
+        <div id="bride-entry" class="song-section filter-item bride-entry">
+            <div class="genre-header">Bride Entry</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Aaj se teri.jpg" class="card-img-top" alt="Aaj se teri Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Aaj se teri</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Bride entry/Aaj Se Teri  Lyrical  Padman  Akshay Kumar  Radhika Apte  Arijit Singh  Amit Trivedi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Aj-Shara-Bela-.jpg" class="card-img-top" alt="Aj shara bela Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Aj shara bela</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Aj Shara Bela Official Video   Shreya Ghoshal  Bohurupi  Anupam Roy  Ritabhari C  Abir C.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Amar gorur garita.jpg" class="card-img-top" alt="Amar gorur garite Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Amar gorur garite</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Amar Gorur Garite 20  আমর গরর গড়ত  HD  Hasan  Dristy  Anupam Music  New Music Video 2020.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Aye bodhu aye.jpg" class="card-img-top" alt="Aye bodhu aye Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Aye bodhu aye</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Aye Bodhu Aye  Anweshaa  Pujarini Ghosh  Ishaan  Bengali Movie Postmaster.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Bala-Nacho-To-Dekh.jpg" class="card-img-top" alt="Bala nacho to dekhi Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bala nacho to dekhi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Bala Nacho To Dekhi Sohag Chand  Iman Chakraborty  Roshni B Official Video  বল নচ ত দখ.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Borondala saja.jpg" class="card-img-top" alt="Barondala Saaja Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Barondala Saaja</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Barondala_Saaja___Arundhati___Koel___Indraneil___Madhuraa_Bhattacharya___Jeet_Gannguli(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Kudmayi.jpg" class="card-img-top" alt="Kudmayi Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kudmayi</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Kudmayi  Lyrical  Rocky Aur Rani Kii Prem Kahaani  Ranveer  Alia  Shahid  Pritam  Amitabh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Leelabali by iman chakraborty.jpg" class="card-img-top" alt="Leelabali Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Leelabali</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Leelabali  Iman Chakraborty  Atishay Jain  Ft Priyanka  Sharmistha  Latest Bengali Wedding Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Madhanya.jpg" class="card-img-top" alt="Madhanya Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Madhanya</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Madhanya Full Video Song  Madhanya rahul vaidya  Asees kaur  madhanya disha parmar  New Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/pindare-polasher-bon.jpg" class="card-img-top" alt="Pindare Polasher Bon Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Pindare Polasher Bon</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Pindare Polasher Bon  Ankita Bhattacharya  Official Video পনদর পলশর বন  Bengali Folk Songs.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/saiyaan superstar.jpg" class="card-img-top" alt="Saiyaan Superstar Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Saiyaan Superstar</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Saiyaan Superstar VIDEO Song  Sunny Leone  Tulsi Kumar  Ek Paheli Leela.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Tenu-Leke.jpg" class="card-img-top" alt="Tenu Leke Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tenu Leke</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Tenu Leke Full Song  SalaamEIshq  Salman Khan Rimi Sen Priyanka Chopra.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Bride entry/Tujh me rab diktha ha.jpg" class="card-img-top" alt="Tujh Mein Rab Dikhta Hai Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tujh Mein Rab Dikhta Hai</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Bride entry/Tujh Mein Rab Dikhta Hai Song  Rab Ne Bana Di Jodi  Shah Rukh Khan Anushka Sharma  Roop Kumar.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Bride entry songs here -->
+            </div>
+        </div>
+        <div id="gaye-holud" class="song-section filter-item gaye-holud">
+            <div class="genre-header">Gaye Holud</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Alta ranga paye.jpg" class="card-img-top" alt="Ashirbad Song 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Alta ranga paye</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Gaye holud/Alta Ranga Paye.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Biye legecha by rahul datta.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Biye legeche</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/BIYA LEGECHE  Rahul Dutta.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Holud re tui.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Holud re tui</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/হলুদ রে তুই _ Kajolrekha _ Sariful Razz, Mondira _ Ontora & Ishika _ Emon Chowdhury│Gias Uddin Selim (320).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Nachde-Ne-Saare.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Nachde ne saare</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Nachde Ne Saare  Full Video  Baar Baar Dekho  Sidharth Malhotra  Katrina Kaif  Jasleen Royal.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Piriti Baindheche.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Piriti Baindheche</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Piriti Baindheche Holdi  Full Video  Maati  Monami Ghosh  Anashua Majumder  Debajyoti Mishra.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Sanai baje.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sanai Baje</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Sanai Baje  সনই বজ   Premer Kahini  Dev  Koel  Ravi Kinagi  Shreya Ghoshal  Shaan  SVF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Sankha baja tora.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sankha baja tora</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Gaye_Holud_Er_Gaan____Shubho_Drishti____Haldi_Ceremony_Songs____Sankha_Baja_Tora_Ulu_Dhoni_De(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Sankha baja ulu de re.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sankha baja ulu de re</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Shankha Baja Ulu De Re.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Subha mangalam.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Subha Mangalam</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Subha Mangalam  Mon Mane Na.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Biye legeche.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Biye legeche</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/BIYA_LEGECHE___OFFICIAL.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Gaye holud/Ritviz liggi.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Ritviz laggi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Gaye holud/Ritviz_-_Liggi__Lyrics____Humri_seet(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Gaye holud songs here -->
+            </div>
+        </div>
+        <div id="groom-entry" class="song-section filter-item groom-entry">
+            <div class="genre-header">Groom Entry</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/aaj-sajeya.jpg" class="card-img-top" alt="Aaj Sajeya Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Song 1</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Groom entry/Aaj Sajeya  Alaya F  Goldie Sohel  Punit Malhotra  Official Video SneakerSong  Dharma 20.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Boron bore chilonbati.jpg" class="card-img-top" alt="Boron bore chilonbati song">
+                        <div class="card-body">
+                            <h5 class="card-title">Boron bore chilonbati</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Boron Bore Chailonbati  বৈরাতী নৃত্য😍 Tumpa Barman  Koch Rajbongshi Dance Video  DB Creation - DB Creation.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Choke tule dekho na.jpg" class="card-img-top" alt="Choke tule dekho na">
+                        <div class="card-body">
+                            <h5 class="card-title">Choke tule dekho na</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Chokh Tule Dekho Na  Sasurbari Zindabad  Prosenjit  Rituparna  Babul Supriyo  SVF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Dulhe-Raja.jpg" class="card-img-top" alt="Dulhe Raja">
+                        <div class="card-body">
+                            <h5 class="card-title">Dulhe Raja</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Dulhe Raja Full SongHum Kisise Kum Nahin Ft Sanjay Dutt Aishwarya Rai.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Esho hey.jpg" class="card-img-top" alt="Esho hey">
+                        <div class="card-body">
+                            <h5 class="card-title">Esho hey</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Esho Hey এস হ  Ek Je Chhilo Raja  Jishhu  Shreya  Ishan  Indraadip  Srijato  Srijit  SVF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Kudmayi.jpg" class="card-img-top" alt="Kudmayi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kudmayi</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Kudmayi  Lyrical  Rocky Aur Rani Kii Prem Kahaani  Ranveer  Alia  Shahid  Pritam  Amitabh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Mao-Kande-.jpg" class="card-img-top" alt="Mao kande song">
+                        <div class="card-body">
+                            <h5 class="card-title">Mao kande</h5>
+                            <p class="card-text">Assamese</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Mao_Kande__Babu_Baruah__Priyanka_Baishya__Popular_Koch_Rajbongshi_Song(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Saajanji ghar aaye.jpg" class="card-img-top" alt="Saajanji Ghar Aaye song">
+                        <div class="card-body">
+                            <h5 class="card-title">Saajanji ghar aaye</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Saajanji Ghar Aaye Full Video  Kuch Kuch Hota HaiShah Rukh KhanKajolAlka Yagnik.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Sabke-baaratein-Aayi.jpg" class="card-img-top" alt="Sabke Baaratein Aayi Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Sabke baaratein Aayi</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/Sabki Baaratein Aayi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Thakur jamai by ankita bhattchariya.jpg" class="card-img-top" alt="Thakur Jamai Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Thakur Jamai</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/ঠকর জমই  Thakur Jamai  Ankita Bhattacharya  Amlaan Chakraborty  বল গন.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Groom entry/Thakur-Jamai swatika dutta.jpg" class="card-img-top" alt="Thakur Jamai Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Thakur Jamai</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Groom entry/y2mate.com - THAKUR JAMAI  SWASTIKA DUTTA  HRITI  SOM I SOHAM  SUDARSHAN  GINA  ANDRES  JSE MUSIC.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Groom entry songs here -->
+            </div>
+        </div>
+        <div id="jalsaj" class="song-section filter-item jalsaj">
+            <div class="genre-header">Jalsaj</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/ami ki herilam.jpg" class="card-img-top" alt="Ami ki herilam song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ami ki herilam</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Jalsaj/Ami Ki Herilam আম ক হরলম  জল ভরর গন Madol Folk Band Biyer Gaan  Dhamail  Dr Tapan Roy.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/Maya lagaise by rahul dutta.jpg" class="card-img-top" alt="Maya lagaise song">
+                        <div class="card-body">
+                            <h5 class="card-title">Maya lagaise</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Maya Lagaise  Rahul Dutta.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/Pitoler-Kolosh.jpg" class="card-img-top" alt="Pitoler kolosh song">
+                        <div class="card-body">
+                            <h5 class="card-title">Pitoler Kolosh</h5>
+                            <p class="card-text">Assamese</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Pitoler Kolosh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/Shubhaarambh.jpg" class="card-img-top" alt="Shubhaarambh song">
+                        <div class="card-body">
+                            <h5 class="card-title">Shubhaarambh</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Shubhaarambh Full Video.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/sundori komola folk studio bangla.jpg" class="card-img-top" alt="Sundori komola song">
+                        <div class="card-body">
+                            <h5 class="card-title">Sundori komola</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Sundori Komola  সনদর কমল  Aakhor  Folk Studio  Bangla New Song 2019  Official Music Video.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/Tora ke ke jol ante.jpg" class="card-img-top" alt="Tora ke ke jabi jon ante song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tora ke ke jabi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Tora Ke Ke Jaabi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/Valo koira bajao go dotora.jpg" class="card-img-top" alt="Ashirbad Song 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Valo koira bajao go dotora</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Valo Koira Bajao Go Dotara   Sundori Komola Nache_Folk song .mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Jalsaj/shajo sundori konya.jpg" class="card-img-top" alt="Shajo sundori konya song">
+                        <div class="card-body">
+                            <h5 class="card-title">Shajo sundori konya</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Jalsaj/Shajo Shundori Konya.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Jalsaj songs here -->
+            </div>
+        </div>
+        <div id="mehndi" class="song-section filter-item mehndi">
+            <div class="genre-header">Mehndi</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Banno song by renuka panwar.jpg" class="card-img-top" alt="Banno song">
+                        <div class="card-body">
+                            <h5 class="card-title">Banno</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Renuka Panwar  Banno Official Video  Riyaazi  Sahil Sandhu  New Haryanvi Song Haryanvi 2023.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Bole chudiya.jpg" class="card-img-top" alt="Bole chudiya song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bole chudiya</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/Bole Chudiyan Full Video  K3GAmitabh Shah Rukh Kajol Kareena HrithikUdit Narayan.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/jad mehandi lag jaave.jpg" class="card-img-top" alt="Jad mehandi lag jaave song">
+                        <div class="card-body">
+                            <h5 class="card-title">Jad mehandi lag jaave</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Jad Mehndi Lag Lag Jaave Video Song  Singh Saab The Great  Sunny Deol Urvashi Rautela.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Leelabali by iman chakraborty.jpg" class="card-img-top" alt="Leelabali song">
+                        <div class="card-body">
+                            <h5 class="card-title">Leelabali</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Leelabali  Iman Chakraborty  Atishay Jain  Ft Priyanka  Sharmistha  Latest Bengali Wedding Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/London thumakda.jpg" class="card-img-top" alt="London thumakda song">
+                        <div class="card-body">
+                            <h5 class="card-title">London thumakda</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Queen London Thumakda Full Video Song  Kangana Ranaut Raj Kumar Rao.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/mehandi hai rachnewali by A.R. rahaman.jpg" class="card-img-top" alt="Mehandi hai rachne wali song">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi hai rachnewali</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/in-y2mate.com - AR Rahman  Mehendi Hai Rachnewali Best VideoZubeidaaKarisma KapoorAlka Yagnik.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehandi laga ke rakha from Dilwale dulhania.jpg" class="card-img-top" alt="Mehandi laga ke rakhna">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi laga ke rakhna</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehndi Laga Ke Rakhna Song  Dilwale Dulhania Le Jayenge  Shah Rukh Khan Kajol  Lata Udit  DDLJ.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehandi song - Haat Duhani.jpg" class="card-img-top" alt="Haat Duhani">
+                        <div class="card-body">
+                            <h5 class="card-title">Haat Duhani</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi Song Haat Duhani.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehandi song by Aishwarya Bhandari.jpg" class="card-img-top" alt="Mehandi Aiyaan Raatan">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi Aiyaan Raatan</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi  Song  Aishwarya Bhandari ft Sushmita Bhandari  Shreyas P  Aditya D  Saaveri mehendi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehandi song by Akriti kakkar.jpg" class="card-img-top" alt="Mehandi song by Akriti kakkar">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi song</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehndi  Official Video I Akriti Kakar I Noor I Chirag Arora.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehandi song by Dhvani Bhanushali.jpg" class="card-img-top" alt="Mehandi dhol mix">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi dhol mix</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi  Song Dhvani Bhanushali  Gurfateh Vishal Dadlani Vinod B LijoChetas Priya S Vibhu P.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehendi-Lagi-Hai.jpg" class="card-img-top" alt="Mehendi lagi hai">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehendi lagi hai</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi Lagi Hai  Stebin Ben  Pranutan Bahl  Gaurav Jang  Sakshi Holkar  Danish Sabri  wedding.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehendi-Wale-Haath.jpg" class="card-img-top" alt="Mehendi wale haath">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehendi wale haath</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi Wale Haath Guru Randhawa Sanjana Sanghi Sayeed Q SachetParampara Arvindr Bhushan Kumar.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Mehndi-Hai-Rachne-Wali.jpg" class="card-img-top" alt="Mehandi hai rachne wali">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi hai rachne wali</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Title Song  Mehndi Hai Rachne Waali  Pallavi  Raghav  Anwessha Shubham Sundaram  4K.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Nazar-Na-Lage.jpg" class="card-img-top" alt="Nazar koi na lage">
+                        <div class="card-body">
+                            <h5 class="card-title">Nazar na lage</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Nazar Koi Na Lage Manisha Rani  Official Video   Payal Dev  New Hindi Song 2023.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Oji ji song.jpg" class="card-img-top" alt="Oji ji song">
+                        <div class="card-body">
+                            <h5 class="card-title">Oji ji song</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - O Jiji  Full Video Song  Vivah Hindi Movie  Shahid Kapoor  Amrita Rao.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Music symbol.jpg" class="card-img-top" alt="Oji ji dance song">
+                        <div class="card-body">
+                            <h5 class="card-title">Oji ji dance song</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - O Jiji  Wedding Dance  Sisters Dancing Together  vivah  Romantic Bollywood  saloni khandelwal.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Sweetheart song.jpg" class="card-img-top" alt="Sweetheart song">
+                        <div class="card-body">
+                            <h5 class="card-title">Sweetheart</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Sweetheart  Lyrical  Kedarnath  Sushant Singh  Sara Ali Khan  Dev Negi  Amit Trivedi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Yaad-Piya-Ki-Aane-Lagi.jpg" class="card-img-top" alt="Yaad piya ki Aane lagi">
+                        <div class="card-body">
+                            <h5 class="card-title">Yaad piya ki Aane lagi</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Yaad Piya Ki Aane Lagi  Divya Khosla Kumar Neha KTanishk BJaani Faisu RadhikaVinay Bhushan K.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mehandi/Music symbol.jpg" class="card-img-top" alt="Mehandi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Mehandi song</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mehandi/y2mate.com - Mehendi Ceremony   Neha  Bengali Wedding Video  Bridal  Mehndi Hai Rachne Wali  Songs.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Mehandi songs here -->
+            </div>
+        </div>
+        <div id="sat-pake" class="song-section filter-item sat-pake">
+            <div class="genre-header">Sat Pake</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sat pake/Bolo piya.jpg" class="card-img-top" alt="Bolo piya song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bolo piya</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Sat pake/Bolo Piya Female  Saat Pake Bandha  Jeet  Koel Mallick  Mahalakshmi Iyer  Jeet Gannguli.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sat pake/Hai hai sat pake badha poro na.jpg" class="card-img-top" alt="Hai hai sat pake badha poro na song">
+                        <div class="card-body">
+                            <h5 class="card-title">Hai hai sat pake badha poro na</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sat pake/Hai Hai Saat PakeLove MarriageRanjitAnkushOindrilaSohagAparajitaAnsuman RoySavvyPBChakiSF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sat pake/Sanai-Er-Shure-Shure.jpg" class="card-img-top" alt="Konnya re">
+                        <div class="card-body">
+                            <h5 class="card-title">Konnya re</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sat pake/Sanai Er Shure Shure - Debolina Nandy.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sat pake/sat pake bondi hobe.jpg" class="card-img-top" alt="Laje Ranga holo kone bou go old song">
+                        <div class="card-body">
+                            <h5 class="card-title">Laje Ranga holo kone bou go old</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sat pake/Sat_pake_bondi_hobe_।__মন_ছুঁয়ে_যাওয়া_বিয়ের_গান।_Bengali_old_romantic_song(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sat pake/Swapno jeno pelo bhasha.jpg" class="card-img-top" alt="Swapno jeno pelo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Swapno jeno pelo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sat pake/Swapno Jeno Pelo Bhasha  Saat Pake Bandha  Jeet  Koel  Kunal Ganjawala  Mahalakshmi Iyer - Surinder  Films.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Sat pake songs here -->
+            </div>
+        </div>
+        <div id="mala-bodol" class="song-section filter-item mala-bodol">
+            <div class="genre-header">Mala Bodol</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mala bodol/laje-ranga.jpg" class="card-img-top" alt="Laje ranga song">
+                        <div class="card-body">
+                            <h5 class="card-title">Laje Ranga</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Mala bodol/Laje Ranga  লজ রঙ  Ankita Bhattacharya  Swastika Dutta  Ishan Mitra  Bangla Wedding Songs.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mala bodol/mala bodol title song.jpg" class="card-img-top" alt="Mala bodol title song">
+                        <div class="card-body">
+                            <h5 class="card-title">Mala bodol title song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mala bodol/Mala Bodol Serial  New Title Song  Lyrical Video  Mala Bodol Zee Bangla .mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Mala bodol/Music symbol.jpg" class="card-img-top" alt="Laje Ranga holo kone bou old song">
+                        <div class="card-body">
+                            <h5 class="card-title">Laje Ranga Old Song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Mala bodol/Laje Ranga holo kone bou go old.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Mala bodol songs here -->
+            </div>
+        </div>
+        <div id="sidur-daan" class="song-section filter-item sidur-daan">
+            <div class="genre-header">Sidur daan</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/E bhabe golpo hok by bibaho diaries.jpg" class="card-img-top" alt="E bhabe golpo hok song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kichu Kichu Kotha</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Sidur dan/🎼E Bhabe Golpo Hok _ Full Audio Song _ Bibaho Diaries Bengali Movie 2017🎼 (320).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Kichu kichu kotha.jpg" class="card-img-top" alt="Kichu Kichu Kotha song">
+                        <div class="card-body">
+                            <h5 class="card-title">Kichu Kichu Kotha</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Kichu Kichu Kotha - Alka Yagnik.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Laal-Ishq.jpg" class="card-img-top" alt="Laal Ishq song">
+                        <div class="card-body">
+                            <h5 class="card-title">Laal Ishq</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Laal Ishq (Video Song)  Goliyon Ki Raasleela Ram-leela  Ranveer Singh  Deepika Padukone - Eros Now Music (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Oonchi-Oonchi-Deewarein.jpg" class="card-img-top" alt="Oonchi Oonchi Deewarein song">
+                        <div class="card-body">
+                            <h5 class="card-title">Oonchi Oonchi Deewarein</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Oonchi Oonchi Deewarein - Arijit Singh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Prem-Jeno-Purno-Holo.jpg" class="card-img-top" alt="Prem jeno purno holo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Prem Jeno Purno holo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Prem Jeno Purno Holo  পরম যন পরণ হল  Rupak Tiary  Trishna Aditya Paul Bangla New Song 2021.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Subha mangalam.jpg" class="card-img-top" alt="Subha Mangalam song">
+                        <div class="card-body">
+                            <h5 class="card-title">Subha Mangalam</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Subha Mangalam  Mon Mane Na.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Tumi amar chiro sathi.jpg" class="card-img-top" alt="Tumi amar chiro sathi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tumi amar chiro sathi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/Tumi_Amar_Chiro_Sathi_ll_Best_Bengali_Wedding_highlight_____bengali_wedding____cinematic_2022(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Sidur daan/Tumi amar jibon sathi.jpg" class="card-img-top" alt="Tumi amar jibon sathi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tumi amar jibon sathi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Sidur dan/তুমি আমার জীবন সাথী  Tumi Amar Jibon Sathi  Sonu Nigam & Alka Yagnik  Bidhataar Lekha  Jeet - DIGITAL MUSIC (BENGALI).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Sidur daan songs here -->
+            </div>
+        </div>
+        <div id="somplok-daan" class="song-section filter-item somplok-daan">
+            <div class="genre-header">Somplok Daan</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Ae-Re-Sakhi.jpg" class="card-img-top" alt="Ae re sakhi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ae re sakhi</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Somplok daan/Ae Re Sakhi.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Bhalolage tomake.jpg" class="card-img-top" alt="Bhalolaage Tomake song">
+                        <div class="card-body">
+                            <h5 class="card-title">Bhalolaage Tomake</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Bhalolaage Tomake  Lyrical Video  Tomake Chai  Bonny  Koushani  Arijit Singh  Anwesshaa.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Dekhechhi-Rupshagore.jpg" class="card-img-top" alt="Dekhechi Rupsagore song">
+                        <div class="card-body">
+                            <h5 class="card-title">Dekhechi Rupsagore</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Dekhechi_Rupsagore.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Du hathey mutho bhore.jpg" class="card-img-top" alt="Du hathey mutho bhore">
+                        <div class="card-body">
+                            <h5 class="card-title">Du hathey mutho bhore</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Du Haatey Mutho Bhorey  Talmar Romeo Juliet Debdutta Hiya Debraj Subhadeep Nilanjan SVF Music.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Ei raat tomar amar.jpg" class="card-img-top" alt="Ei raat tomar amar song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ei raat tomar amar</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Ei Raat Tomar Amar_Cover Souradipta Ghosh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/keu mone mone.jpg" class="card-img-top" alt="Ekta hat khujechi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ekta hat khujechi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Ekta hat khujechi shara rat khujechi song HD Josh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan" class="card-img-top" alt="Eto Alo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Eto Alo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Eto_Alo___Lyrical___Katmundu___Shreya_Ghoshal___Mimi_Chakraboty.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/Sajna.jpg" class="card-img-top" alt="Sajnaa song">
+                        <div class="card-body">
+                            <h5 class="card-title">Sajnaa</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Sajnaa.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Somplok daan/tetulpata title song.jpg" class="card-img-top" alt="Ekta hat khujechi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tentulpataa Title Song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Somplok daan/Tentulpataa Title Song  Indradip Dasgupta  Star Jalsha  Disney Hotstar  Subham Music - Subham Music.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Bhat Kapor songs here -->
+            </div>
+        </div>
+        <div id="highlight" class="song-section filter-item highlight">
+            <div class="genre-header">Highlight</div>
+            <div class="song-list">
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Baundhula ghuri.jpg" class="card-img-top" alt="Badhone badhibo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Baundule Ghuri</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Highlight/Baundule Ghuri_ShreyaArijitAnupamAnirbanJayaJioStudios SVF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Badhone badhibo.jpg" class="card-img-top" alt="Badhone badhibo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Badhone badhibo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio1">
+                                <source src="Songs/Bengali/Highlight/বাঁধনে_বাঁধিবো___-_Jisshu_-_Solanki_-_Shovan_-_Lyrical_-_Baba,_Baby,_O_-_New_Bengali_Film_Song_2022(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Bhalolage tomake.jpg" class="card-img-top" alt="Bhalolaage Tomake">
+                        <div class="card-body">
+                            <h5 class="card-title">Bhalolaage Tomake</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Bhalolaage Tomake  Lyrical Video  Tomake Chai  Bonny  Koushani  Arijit Singh  Anwesshaa.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Chadna-Tola.jpg" class="card-img-top" alt="Chadna Tola Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Chadna Tola</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Chadna Tola.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/E bhabe golpo hok by bibaho diaries.jpg" class="card-img-top" alt="E bhabe golpo hok song">
+                        <div class="card-body">
+                            <h5 class="card-title">E bhabe golpo hok</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/🎼E Bhabe Golpo Hok _ Full Audio Song _ Bibaho Diaries Bengali Movie 2017🎼 (320).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/E bhabe golpo hok by rupak tiary.jpg" class="card-img-top" alt="E bhabe golpo hok song">
+                        <div class="card-body">
+                            <h5 class="card-title">E bhabe golpo hok</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/E Bhabe Golpo Hok  Rupak Tiary  Aditya Paul  Cover  New Bengali Wedding Song 2020.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Ebhabe amar hoye jabe by Rupak tiary.jpg" class="card-img-top" alt="Ebhabe amar hoye jabe song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ebhabe amar hoye jabe</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Ebhabe_Amar_Hoye_Jabe___Mekhla___Arka_Wedding_Song___%40RupakTiary____Aviman_Paul___Shaadi_Days(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Egiye de.jpg" class="card-img-top" alt="Egiye de song">
+                        <div class="card-body">
+                            <h5 class="card-title">Egiye de</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Egiye de _ Shudhu Tomari Jonyo _ Dev _ Srabanti _ Arijit Singh _ Madhubanti Bagchi _ Arindom _ SVF (320).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Elo-Elo.jpg" class="card-img-top" alt="Elo Elo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Elo Elo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Elo Elo - Rupak Tiary (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Hoyechhe-Boli-Ki-Shon.jpg" class="card-img-top" alt="Hoyechhe Boli Ki Shon song">
+                        <div class="card-body">
+                            <h5 class="card-title">Hoyechhe Boli Ki Shon</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Hoyechhe Boli Ki Shon  Pradhan  Shreya Ghoshal Papon  Dev Soumitrisha  Shantanu M  Avijit Sen.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/megher palok.jpg" class="card-img-top" alt="Megher Palok song">
+                        <div class="card-body">
+                            <h5 class="card-title">Megher palok</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Megher Palok  Shreya Ghoshal  Natobar Not Out  Lyrical.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Mon rage anurage.jpg" class="card-img-top" alt="Mon Rage Anurage song">
+                        <div class="card-body">
+                            <h5 class="card-title">Mon Rage Anurage</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Mon Rage Anurage_ Cover  Souradipta Ghosh .mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Naam na jana pakhi.jpg" class="card-img-top" alt="Naam Na Jana Pakhi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Naam Na Jana Pakhi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Naam Na Jana Pakhi নম ন জন পখ  Ka Kha Ga Gha  Arijit Singh  Shreya Ghoshal  Bangla Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/O jibon tomar satha by iman.jpg" class="card-img-top" alt="O Jibon Tomar Sathe">
+                        <div class="card-body">
+                            <h5 class="card-title">O Jibon Tomar Sathe</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/O Jibon Tomar Sathe  IMAN   Koneenica   Shiboprasad  Mukherjee Dar Bou  Bengali Film Song 2019.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Ore manwa re.jpg" class="card-img-top" alt="Ore Manwa Re Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Ore Manwa Re</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Ore Manwa Re Official Video Song ᴴᴰ  Arijit Singh and Akriti Kakkar  Game Bengali Movie 2014.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Prem-Jeno-Purno-Holo.jpg" class="card-img-top" alt="Prem Jeno Purno Holo Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Prem Jeno Purno Holo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Prem Jeno Purno Holo  পরম যন পরণ হল  Rupak Tiary  Trishna Aditya Paul Bangla New Song 2021.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Raikamal.jpg" class="card-img-top" alt="Raikamal Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Raikamal</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Raikamal রইকমল  Original Song  Chakropani Dev  Tamalika Golder  Swadesh Misra  Debdeep Banik.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Subhodrishti.jpg" class="card-img-top" alt="Subhodrishti title song">
+                        <div class="card-body">
+                            <h5 class="card-title">Subhodrishti title song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Shubhodrishti Title Song.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Sokhi-Tora-Prem-Koriyo-Na.jpg" class="card-img-top" alt="sokhi tora prem korio na song">
+                        <div class="card-body">
+                            <h5 class="card-title">sokhi tora prem korio na</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Sokhi Tora Prem Koriyo Na  Lyrical  সখ তর পরম করয ন  Aditi Chakraborty  Gan Goppo.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/subho bibaho.jpg" class="card-img-top" alt="Subho Bibaho Title Song">
+                        <div class="card-body">
+                            <h5 class="card-title">Subho Bibaho Title Song</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Subho Bibaho Serial Title Song   Rahul Dutta & Anushka Patra  Santajit - Santajit.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Take olpo kache dakchi.jpg" class="card-img-top" alt="Takey Olpo Kachhe Dakchhi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Takey Olpo Kachhe Dakchhi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Takey Olpo Kachhe Dakchhi Prem Tame Mahtim Shakib Soumya, Susmita,Sweta Shibabrata Anindya SVF - SVF.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Sudhu tomar jonyo.jpg" class="card-img-top" alt="Sudhu tomar jonyo song">
+                        <div class="card-body">
+                            <h5 class="card-title">Sudhu tomar jonyo</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Shudhu Tomari Jonyo  শধ তমরই জনয  Souradipta  Musical Shorts  Prt2  Cover Music Video 2023.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Tui chuli jakhan.jpg" class="card-img-top" alt="Tui chuli jakhan song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tui chuli jakhan</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Tui Chunli Jakhan (320).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Tui-Chara-Ke-Apon.jpg" class="card-img-top" alt="Tui chara ke apon song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tui chara ke apon</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Tui Chara Ke Apon.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Tum kya mile.jpg" class="card-img-top" alt="Tum kya mile song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tum kya mile</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Tum Kya Mile - Video _ Rocky Aur Rani Kii Prem Kahaani _ Ranveer,Alia,Arijit,Shreya,Pritam,Amitabh.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Tum se.jpg" class="card-img-top" alt="Tum se song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tum se</h5>
+                            <p class="card-text">Hindi</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Tum Se (Full Video)_ Shahid Kapoor, Kriti _ Sachin-Jigar, Raghav Chaitanya, Varun Jain, Indraneel - T-Series (youtube).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="song-card">
+                    <div class="card">
+                        <img src="songs images/Bengali/Highlight/Tumi amar chiro sathi.jpg" class="card-img-top" alt="Tumi Amar Chiro Sathi song">
+                        <div class="card-body">
+                            <h5 class="card-title">Tumi Amar Chiro Sathi</h5>
+                            <p class="card-text">Bengali</p>
+                            <!-- Audio Player -->
+                            <audio controls class="audio-player" id="audio2">
+                                <source src="Songs/Bengali/Highlight/Tumi_Amar_Chiro_Sathi_ll_Best_Bengali_Wedding_highlight_____bengali_wedding____cinematic_2022(256k).mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add other Bhat Kapor songs here -->
+            </div>
+        </div>
+        <!-- Repeat for other genres like Bhat Kapor, Bidaai, etc. -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 আয়না ঘর Studio. All rights reserved.</p>
+    </footer>
+
+    <script src="bengali.js"></script>
+
+</body>
+</html>

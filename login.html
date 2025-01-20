@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - আয়না ঘর Studio Audio Library</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <img src="logo.png" alt="আয়না ঘর Studio Logo" class="logo">
+                <h1>আয়না ঘর Studio</h1>
+            </div>
+            
+            <h2>Login to Our Audio Library</h2>
+            <form action="/login" method="POST">
+                <div class="input-container">
+                    <label for="security-code">Security Code</label>
+                    <input type="text" id="security-code" name="security-code" required placeholder="Enter security code" />
+                </div>
+                <div class="button-container">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            <div class="reasons">
+                <h3>Why is the security code necessary?</h3>
+                <ul>
+                    <li>The security code will secure the audio library from fraud and hackers.</li>
+                    <li>The security code will help us prevent our audio library's song tracks from being stolen by unauthorized users.</li>
+                    <li>The security code will improve your experience and protect your personal preferences.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

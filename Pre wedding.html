@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আয়না ঘর Studio - Pre-Wedding Song Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #f7efe9, #eae2d6);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(90deg, #ffcc99, #ff9966);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .filter-btn {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff9966;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: #ff7744;
+        }
+
+        .song-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .genre-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff9966;
+        }
+
+        .song-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .song-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 300px;
+            margin: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .song-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>আয়না ঘর Studio</h1>
+        <p>Pre-Wedding Song Library</p>
+    </header>
+
+    <!-- Genre Filter Buttons -->
+    <div class="container text-center my-4">
+        <h4>Filter by Genre</h4>
+        <button class="filter-btn" onclick="filterGenre('all')">All</button>
+        <button class="filter-btn" onclick="filterGenre('romantic')">Romantic</button>
+        <button class="filter-btn" onclick="filterGenre('traditional')">Traditional</button>
+        <button class="filter-btn" onclick="filterGenre('upbeat')">Upbeat</button>
+    </div>
+
+    <!-- Language Filter Buttons -->
+    <div class="container text-center my-4">
+        <h4>Filter by Language</h4>
+        <button class="filter-btn" onclick="filterLanguage('all')">All</button>
+        <button class="filter-btn" onclick="filterLanguage('bengali')">Bengali</button>
+        <button class="filter-btn" onclick="filterLanguage('hindi')">Hindi</button>
+        <button class="filter-btn" onclick="filterLanguage('english')">English</button>
+    </div>
+
+    <!-- Song Sections -->
+    <div class="container">
+        <div id="romantic" class="song-section">
+            <div class="genre-header">New Songs</div>
+            <div class="song-list">
+                <div class="song-card bengali">
+                    <img src="songs images" class="card-img-top" alt="Aj Shara Bela Song">
+                    <h5 class="mt-2">Aj Shara Bela</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/New/Aj Shara Bela Official Video   Shreya Ghoshal  Bohurupi  Anupam Roy  Ritabhari C  Abir C.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/New/" class="card-img-top" alt="Kishori Song">
+                    <h5 class="mt-2">Kishori Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/New/Kishori  Khadaan  Dev  Idhika  Antara Mitra  Rathijit Bhattacharjee  Ritam Sen  Soojit.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/New/" class="card-img-top" alt="Shubhodrishti Title Song">
+                    <h5 class="mt-2">Shubhodrishti Title Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/New/Shubhodrishti Title Song _ Anupam Roy _ Somlata - Anupam Roy (youtube).mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+
+        <div id="traditional" class="song-section">
+            <div class="genre-header">Traditional Songs</div>
+            <div class="song-list">
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Tomake bhalo lagacha Song">
+                    <h5 class="mt-2">Tomake bhalo lagacha Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Arpita x Arindam Pre Wedding Video I New Bengali Pre Wedding 2024 I Cinematography I Bagchi Bari.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Bhenge Mor Song">
+                    <h5 class="mt-2">Bhenge Mor Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Bhenge Mor  মনভঞজন  Sohini Anirban রবনদর সঙগত Mekhla Satyaki Upali Hoichoi SVF Music.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Brishti Bheja Khame Song">
+                    <h5 class="mt-2">Brishti Bheja Khame Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Brishti Bheja Khame  বষট ভজ খম  Rabisankar RSR  Deepmala Saikat  Suchandra  OFE.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional" class="card-img-top" alt="EBHABEO PREME PORA JAY Song ">
+                    <h5 class="mt-2">EBHABEO PREME PORA JAY Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/EBHABEO PREME PORA JAY  AAY KHUKU AAY  PROSENJIT  DITIPRIYA  RAHUL  SAUVIK  RANAJOY.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Hrid Majhare Song">
+                    <h5 class="mt-2">Hrid Majhare Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Hrid Majhare.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Jiya Tui Chara Song">
+                    <h5 class="mt-2">Jiya Tui Chara Song</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Jiya Tui Chara _ Biye Bibhrat _ Arijit Singh _ Parambrata Chattopadhyay, Lahoma B _ Ranajoy B - Zee Music Bangla (youtube).mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Oboseshe Song">
+                    <h5 class="mt-2">Oboseshe Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/Oboseshe_Arijit Singh.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card bengali">
+                    <img src="songs images/Pre weadding/Traditional/" class="card-img-top" alt="Traditional Song 2">
+                    <h5 class="mt-2">Traditional Song 2</h5>
+                    <audio controls>
+                        <source src="Songs/Pre wedding/Traditional/" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+
+        <div id="upbeat" class="song-section">
+            <div class="genre-header">Upbeat Songs</div>
+            <div class="song-list">
+                <div class="song-card hindi">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Upbeat Song 1">
+                    <h5 class="mt-2">Upbeat Song 1</h5>
+                    <audio controls>
+                        <source src="song5.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="song-card english">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Upbeat Song 2">
+                    <h5 class="mt-2">Upbeat Song 2</h5>
+                    <audio controls>
+                        <source src="song6.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 আয়না ঘর Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function filterGenre(category) {
+            const sections = document.querySelectorAll('.song-section');
+            sections.forEach(section => {
+                if (category === 'all' || section.id === category) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        function filterLanguage(language) {
+            const cards = document.querySelectorAll('.song-card');
+            cards.forEach(card => {
+                if (language === 'all' || card.classList.contains(language)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    <script src="pre_wedding.js"></script>
+</body>
+</html>

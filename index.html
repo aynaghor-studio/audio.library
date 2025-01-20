@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Audio Library ┃ আয়না ঘর</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Background Video */
+    .bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      padding: 100px 20px; /* Added padding to accommodate smaller screens */
+      text-align: center;
+    }
+
+    /* Founder and Developer Cards */
+    .cards-container {
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 100%; /* Make cards take full width on smaller screens */
+      margin: 15px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 768px) {
+      .welcome-section {
+        padding: 50px 20px;
+      }
+      
+      .card {
+        width: 100%; /* Full-width cards for smaller devices */
+      }
+    }
+
+    @media (max-width: 576px) {
+      .welcome-section {
+        padding: 30px 20px; /* Reduced padding for very small screens */
+      }
+
+      .card-img-top {
+        height: 150px; /* Smaller card images on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Video -->
+  <video autoplay loop muted class="bg-video">
+    <source src="Background.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Welcome Section -->
+  <div class="container text-center welcome-section">
+    <header>
+      <h1>আয়না ঘর Studio</h1>
+      <h3>Videography Studio</h3>
+    </header><br><br><br>
+    <section>
+      <h2>Welcome to Wedding Audio Library</h2>
+      <p>Explore wedding audio libraries for Bengali & Bihari weddings, Muslim Nikah, and First Rice ceremonies.</p>
+      <p>Secure access requires login. Please login below.</p>
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </section>
+  </div>
+
+  <!-- Founder and Web Developer Cards Section -->
+  <div class="container cards-container">
+    <div class="row">
+      <!-- Founder Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <img src="Director.jpg" class="card-img-top" alt="Founder">
+          <div class="card-body">
+            <h5 class="card-title">Founder</h5>
+            <p class="card-text">The visionary behind Aynaghor Studio, passionate about wedding photography and videography.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Web Developer Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <img src="Webdeveloper.jpg" class="card-img-top" alt="Web Developer">
+          <div class="card-body">
+            <h5 class="card-title">Web Developer</h5>
+            <p class="card-text">A dedicated developer who created this wedding audio library platform to showcase wedding content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
