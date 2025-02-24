@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+
+  <div class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <header class="bg-gray-800 p-4">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl">Admin Dashboard</h1>
+        <!-- Portal Button -->
+        <a href="/portal" class="bg-blue-600 py-2 px-4 rounded">Go to Portal</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <h2 class="text-xl mb-4">Client Login Analysis</h2>
+      
+      <!-- Table displaying login info -->
+      <table class="w-full table-auto text-sm text-left">
+        <thead class="bg-gray-700">
+          <tr>
+            <th class="p-2">Username</th>
+            <th class="p-2">Device</th>
+            <th class="p-2">Login Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userLogs.forEach(login => { %>
+            <tr class="bg-gray-800 hover:bg-gray-700">
+              <td class="p-2"><%= login.username %></td>
+              <td class="p-2"><%= login.device_name %></td>
+              <td class="p-2"><%= login.login_time.toLocaleString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+</body>
+</html>
